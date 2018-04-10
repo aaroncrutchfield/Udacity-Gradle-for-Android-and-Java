@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>build.gradle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+build.gradle</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">/* 
+ 
+There's a whole lot going on in the default Android build scripts. For 
+starters, this is actually a multi-project build, and the Android app itself 
+is a subproject. We'll talk all about multi project builds in lesson 4, but 
+It's set up that way so it's easy to add other sub-projects that we want to 
+build together with the app, like libraries, or even a back-end. 
+ 
+This build.gradle file is for the root project. There are two things to note 
+in this file. First, we declare a buildscript dependency on 
+'com.android.tools.build:gradle:1.1.0'. This is where the Android plugin for 
+Gradle lives. 
+ 
+*/</span><span class="s1"> 
+ 
+</span><span class="s0">// Top-level build file where you can add configuration options common to all</span><span class="s1"> 
+</span><span class="s0">// sub-projects/modules.</span><span class="s1"> 
+ 
+buildscript { 
+    repositories { 
+        jcenter() 
+        google() 
+    } 
+    dependencies { 
+        classpath </span><span class="s2">'com.android.tools.build:gradle:3.0.1'</span><span class="s1"> 
+ 
+        </span><span class="s0">// NOTE: Do not place your application dependencies here; they belong</span><span class="s1"> 
+        </span><span class="s0">// in the individual module build.gradle files</span><span class="s1"> 
+    } 
+} 
+ 
+</span><span class="s0">/* 
+ 
+Second this block adds the jcenter repository to every subproject of the 
+build. We'll talk about this multi-project stuff in lesson 4. 
+ 
+*/</span><span class="s1"> 
+ 
+allprojects { 
+    repositories { 
+        jcenter() 
+        google() 
+    } 
+} 
+ 
+</span><span class="s0">/* 
+ 
+Let's take a look at the build script specifically for the Android app, which 
+is in the /app directory. 
+ 
+*/</span><span class="s1"> 
+</span></pre>
+</body>
+</html>
