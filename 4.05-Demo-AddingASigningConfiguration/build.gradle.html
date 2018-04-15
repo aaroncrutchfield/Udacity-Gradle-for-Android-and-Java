@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>build.gradle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+build.gradle</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">/* 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a>Signing an app gives you a cryptographic way to associate your app with a 
+<a name="l4"><span class="ln">4    </span></a>secret key you control. To sign this app, we need to do three things. First we 
+<a name="l5"><span class="ln">5    </span></a>need to create a keystore and a key. Second, we need to create a signing 
+<a name="l6"><span class="ln">6    </span></a>config in our build.gradle. The signing config basically describes where to 
+<a name="l7"><span class="ln">7    </span></a>find and access the keystore and key. Then finally we need to assign the 
+<a name="l8"><span class="ln">8    </span></a>signing configuration to a build type. 
+<a name="l9"><span class="ln">9    </span></a> 
+<a name="l10"><span class="ln">10   </span></a>You can do this entire signing process via command line tools, so don't think 
+<a name="l11"><span class="ln">11   </span></a>there's anything magic happening here. That being said, let's go ahead and use 
+<a name="l12"><span class="ln">12   </span></a>the Android Studio &quot;Generate Signed APK&quot; Wizard to create our keystore. This 
+<a name="l13"><span class="ln">13   </span></a>wizard is actually for generating a one-off signed APK, and what we would like 
+<a name="l14"><span class="ln">14   </span></a>to do is configure our release build type so that it's always signed. 
+<a name="l15"><span class="ln">15   </span></a> 
+<a name="l16"><span class="ln">16   </span></a>To create our keystore, navigate to Build &gt; Generate Signed APK... 
+<a name="l17"><span class="ln">17   </span></a> 
+<a name="l18"><span class="ln">18   </span></a>We want to sign the app module, so hit Next, now hit Create New... Hit the 
+<a name="l19"><span class="ln">19   </span></a>dots, then click the gradle logo to change to the project directory, and name 
+<a name="l20"><span class="ln">20   </span></a>the keystore &quot;keystore.jks&quot;. We'll create a key with the alias Udacity, and 
+<a name="l21"><span class="ln">21   </span></a>make the passwords to both the keystore and the key itself &quot;udacity&quot;. We'll 
+<a name="l22"><span class="ln">22   </span></a>leave the validity duration the default 25 years. You can fill in as much of 
+<a name="l23"><span class="ln">23   </span></a>the demographic information as you're inclined to. 
+<a name="l24"><span class="ln">24   </span></a> 
+<a name="l25"><span class="ln">25   </span></a>Once you hit Ok, the keystore has been created, and you can exit this wizard. 
+<a name="l26"><span class="ln">26   </span></a>Now we're going to use a different Android Studio wizard to create a signing 
+<a name="l27"><span class="ln">27   </span></a>configuration that uses the key we just created. Right click on the app 
+<a name="l28"><span class="ln">28   </span></a>directory and selected &quot;Open Module Settings&quot;. We'll open the Signing tab, and 
+<a name="l29"><span class="ln">29   </span></a>click the plus sign to create a new configuration. We'll name it 
+<a name="l30"><span class="ln">30   </span></a>defaultConfig, and add the location of the keystore, the keystore password, 
+<a name="l31"><span class="ln">31   </span></a>the key alias, and the key password. When we hit okay and head back to our 
+<a name="l32"><span class="ln">32   </span></a>build.gradle file, we find that a configuration block has been added to our 
+<a name="l33"><span class="ln">33   </span></a>build script. 
+<a name="l34"><span class="ln">34   </span></a> 
+<a name="l35"><span class="ln">35   </span></a>Note that the storeFile field is using an absolute path, which isn't very 
+<a name="l36"><span class="ln">36   </span></a>portable. There are various issues you might want to consider regarding the 
+<a name="l37"><span class="ln">37   </span></a>security of checking your keystore and passwords into version control, but the 
+<a name="l38"><span class="ln">38   </span></a>most expedient thing to do is use Groovy string interpolation and the rootDir 
+<a name="l39"><span class="ln">39   </span></a>property on the project object to make the keystore location relative to the 
+<a name="l40"><span class="ln">40   </span></a>project root directory. 
+<a name="l41"><span class="ln">41   </span></a> 
+<a name="l42"><span class="ln">42   </span></a>Now the last step is to assign this signing configuration to a build type. 
+<a name="l43"><span class="ln">43   </span></a>Let's use the Android Studio wizard once more. We'll open up our Module 
+<a name="l44"><span class="ln">44   </span></a>Settings once again, and open the Build Types tab. Select `release`, and click 
+<a name="l45"><span class="ln">45   </span></a>the &quot;Signing Config&quot; dropdown, and select our defaultConfig. Now if we take 
+<a name="l46"><span class="ln">46   </span></a>another look at our build script, we see the line `signingConfig 
+<a name="l47"><span class="ln">47   </span></a>signingConfigs.config` has been added to our release build type configuration 
+<a name="l48"><span class="ln">48   </span></a>block. 
+<a name="l49"><span class="ln">49   </span></a> 
+<a name="l50"><span class="ln">50   </span></a>We're now set up for automatic signing. To verify that our APK is indeed being 
+<a name="l51"><span class="ln">51   </span></a>signed, we'll run 
+<a name="l52"><span class="ln">52   </span></a> 
+<a name="l53"><span class="ln">53   </span></a>    $ ./gradlew assemble 
+<a name="l54"><span class="ln">54   </span></a> 
+<a name="l55"><span class="ln">55   </span></a>Now we can look into the release APK using the following command 
+<a name="l56"><span class="ln">56   </span></a> 
+<a name="l57"><span class="ln">57   </span></a>    $ unzip -l app/build/outputs/apk/app-release.apk 
+<a name="l58"><span class="ln">58   </span></a> 
+<a name="l59"><span class="ln">59   </span></a>The last couple files in the APK are the files that contain the signature 
+<a name="l60"><span class="ln">60   </span></a> 
+<a name="l61"><span class="ln">61   </span></a>    26754  04-29-15 15:10   META-INF/CERT.SF 
+<a name="l62"><span class="ln">62   </span></a>      776  04-29-15 15:10   META-INF/CERT.RSA 
+<a name="l63"><span class="ln">63   </span></a> 
+<a name="l64"><span class="ln">64   </span></a>*/</span><span class="s1"> 
+<a name="l65"><span class="ln">65   </span></a> 
+<a name="l66"><span class="ln">66   </span></a>apply plugin: </span><span class="s2">'com.android.application'</span><span class="s1"> 
+<a name="l67"><span class="ln">67   </span></a> 
+<a name="l68"><span class="ln">68   </span></a>android { 
+<a name="l69"><span class="ln">69   </span></a>    signingConfigs { 
+<a name="l70"><span class="ln">70   </span></a>        config { 
+<a name="l71"><span class="ln">71   </span></a>            keyAlias </span><span class="s2">'udacity'</span><span class="s1"> 
+<a name="l72"><span class="ln">72   </span></a>            keyPassword </span><span class="s2">'password'</span><span class="s1"> 
+<a name="l73"><span class="ln">73   </span></a>            storeFile file(</span><span class="s2">&quot;</span><span class="s1">$rootDir</span><span class="s2">/keystore.jks&quot;</span><span class="s1">) 
+<a name="l74"><span class="ln">74   </span></a>            storePassword </span><span class="s2">'password'</span><span class="s1"> 
+<a name="l75"><span class="ln">75   </span></a>        } 
+<a name="l76"><span class="ln">76   </span></a>    } 
+<a name="l77"><span class="ln">77   </span></a>    compileSdkVersion </span><span class="s3">24</span><span class="s1"> 
+<a name="l78"><span class="ln">78   </span></a>    buildToolsVersion </span><span class="s2">&quot;24.0.1&quot;</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a>    defaultConfig { 
+<a name="l80"><span class="ln">80   </span></a>        applicationId </span><span class="s2">&quot;com.udacity.gradle.signing&quot;</span><span class="s1"> 
+<a name="l81"><span class="ln">81   </span></a>        minSdkVersion </span><span class="s3">15</span><span class="s1"> 
+<a name="l82"><span class="ln">82   </span></a>        targetSdkVersion </span><span class="s3">24</span><span class="s1"> 
+<a name="l83"><span class="ln">83   </span></a>        versionCode </span><span class="s3">1</span><span class="s1"> 
+<a name="l84"><span class="ln">84   </span></a>        versionName </span><span class="s2">&quot;1.0&quot;</span><span class="s1"> 
+<a name="l85"><span class="ln">85   </span></a>    } 
+<a name="l86"><span class="ln">86   </span></a>    buildTypes { 
+<a name="l87"><span class="ln">87   </span></a>        release { 
+<a name="l88"><span class="ln">88   </span></a>            minifyEnabled false 
+<a name="l89"><span class="ln">89   </span></a>            proguardFiles getDefaultProguardFile(</span><span class="s2">'proguard-android.txt'</span><span class="s1">), </span><span class="s2">'proguard-rules.pro'</span><span class="s1"> 
+<a name="l90"><span class="ln">90   </span></a>            signingConfig signingConfigs.config 
+<a name="l91"><span class="ln">91   </span></a>        } 
+<a name="l92"><span class="ln">92   </span></a>    } 
+<a name="l93"><span class="ln">93   </span></a>} 
+<a name="l94"><span class="ln">94   </span></a> 
+<a name="l95"><span class="ln">95   </span></a>dependencies { 
+<a name="l96"><span class="ln">96   </span></a>    compile fileTree(dir: </span><span class="s2">'libs'</span><span class="s1">, include: [</span><span class="s2">'*.jar'</span><span class="s1">]) 
+<a name="l97"><span class="ln">97   </span></a>    compile </span><span class="s2">'com.android.support:appcompat-v7:24.1.1'</span><span class="s1"> 
+<a name="l98"><span class="ln">98   </span></a>} 
+<a name="l99"><span class="ln">99   </span></a></span></pre>
+</body>
+</html>
