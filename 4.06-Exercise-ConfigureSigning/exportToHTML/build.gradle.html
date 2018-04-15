@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>build.gradle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(106,135,89); }
+.s3 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+build.gradle</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">/* 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a>In this exercise you'll configure signing and deploy a release build. 
+<a name="l4"><span class="ln">4    </span></a> 
+<a name="l5"><span class="ln">5    </span></a>1. Use the Build &gt; Generate Signed APK dialog to create a new keystore 
+<a name="l6"><span class="ln">6    </span></a>(or you can use a previously generated keystore). 
+<a name="l7"><span class="ln">7    </span></a> 
+<a name="l8"><span class="ln">8    </span></a>2. Create a signing configuration using your keystore. You can either use the Module Settings dialog 
+<a name="l9"><span class="ln">9    </span></a>(which you can access by right clicking on the app folder), or by manually configuring the 
+<a name="l10"><span class="ln">10   </span></a>signingConfigs block. Make sure the keystore is included in your project directory and is referenced 
+<a name="l11"><span class="ln">11   </span></a> 
+<a name="l12"><span class="ln">12   </span></a>via http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Signing-Configurations 
+<a name="l13"><span class="ln">13   </span></a> 
+<a name="l14"><span class="ln">14   </span></a>3. Configure the release build type to use your new signing configuration. Again, you can either 
+<a name="l15"><span class="ln">15   </span></a>use the Module Settings dialog, or do it manually. 
+<a name="l16"><span class="ln">16   </span></a> 
+<a name="l17"><span class="ln">17   </span></a>4. Finally, deploy the release build type to your test device! 
+<a name="l18"><span class="ln">18   </span></a> 
+<a name="l19"><span class="ln">19   </span></a>The solution to this exercise is essentially Demo 4.05 
+<a name="l20"><span class="ln">20   </span></a> 
+<a name="l21"><span class="ln">21   </span></a>*/</span><span class="s1"> 
+<a name="l22"><span class="ln">22   </span></a> 
+<a name="l23"><span class="ln">23   </span></a> 
+<a name="l24"><span class="ln">24   </span></a>apply plugin: </span><span class="s2">'com.android.application'</span><span class="s1"> 
+<a name="l25"><span class="ln">25   </span></a> 
+<a name="l26"><span class="ln">26   </span></a>android { 
+<a name="l27"><span class="ln">27   </span></a>    signingConfigs { 
+<a name="l28"><span class="ln">28   </span></a>        release { 
+<a name="l29"><span class="ln">29   </span></a>            keyAlias </span><span class="s2">'ultimaKey'</span><span class="s1"> 
+<a name="l30"><span class="ln">30   </span></a>            keyPassword </span><span class="s2">'fantasy7'</span><span class="s1"> 
+<a name="l31"><span class="ln">31   </span></a>            storeFile file(</span><span class="s2">'C:/Users/ioutd/Documents/GitHub/ud867/4.06-Exercise-ConfigureSigning/keystore.jks'</span><span class="s1">) 
+<a name="l32"><span class="ln">32   </span></a>            storePassword </span><span class="s2">'fantasy7'</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a>        } 
+<a name="l34"><span class="ln">34   </span></a>    } 
+<a name="l35"><span class="ln">35   </span></a>    compileSdkVersion </span><span class="s3">24</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a>    buildToolsVersion </span><span class="s2">&quot;24.0.1&quot;</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a>    defaultConfig { 
+<a name="l38"><span class="ln">38   </span></a>        applicationId </span><span class="s2">&quot;com.udacity.gradle.automaticsigning&quot;</span><span class="s1"> 
+<a name="l39"><span class="ln">39   </span></a>        minSdkVersion </span><span class="s3">15</span><span class="s1"> 
+<a name="l40"><span class="ln">40   </span></a>        targetSdkVersion </span><span class="s3">24</span><span class="s1"> 
+<a name="l41"><span class="ln">41   </span></a>        versionCode </span><span class="s3">1</span><span class="s1"> 
+<a name="l42"><span class="ln">42   </span></a>        versionName </span><span class="s2">&quot;1.0&quot;</span><span class="s1"> 
+<a name="l43"><span class="ln">43   </span></a>    } 
+<a name="l44"><span class="ln">44   </span></a>    buildTypes { 
+<a name="l45"><span class="ln">45   </span></a>        release { 
+<a name="l46"><span class="ln">46   </span></a>            minifyEnabled false 
+<a name="l47"><span class="ln">47   </span></a>            proguardFiles getDefaultProguardFile(</span><span class="s2">'proguard-android.txt'</span><span class="s1">), </span><span class="s2">'proguard-rules.pro'</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a>            signingConfig signingConfigs.release 
+<a name="l49"><span class="ln">49   </span></a>        } 
+<a name="l50"><span class="ln">50   </span></a>    } 
+<a name="l51"><span class="ln">51   </span></a>} 
+<a name="l52"><span class="ln">52   </span></a> 
+<a name="l53"><span class="ln">53   </span></a>dependencies { 
+<a name="l54"><span class="ln">54   </span></a>    compile fileTree(include: [</span><span class="s2">'*.jar'</span><span class="s1">], dir: </span><span class="s2">'libs'</span><span class="s1">) 
+<a name="l55"><span class="ln">55   </span></a>    compile </span><span class="s2">'com.android.support:appcompat-v7:24.1.1'</span><span class="s1"> 
+<a name="l56"><span class="ln">56   </span></a>} 
+<a name="l57"><span class="ln">57   </span></a></span></pre>
+</body>
+</html>

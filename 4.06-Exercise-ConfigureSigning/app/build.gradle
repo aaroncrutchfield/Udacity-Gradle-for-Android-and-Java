@@ -2,13 +2,17 @@
 
 In this exercise you'll configure signing and deploy a release build.
 
-1. Use the Build > Generate Signed APK dialog to create a new keystore (or you can use a previously generated keystore).
+1. Use the Build > Generate Signed APK dialog to create a new keystore
+(or you can use a previously generated keystore).
 
-2. Create a signing configuration using your keystore. You can either use the Module Settings dialog (which you can access by right clicking on the app folder), or by manually configuring the signingConfigs block. Make sure the keystore is included in your project directory and is referenced via a
+2. Create a signing configuration using your keystore. You can either use the Module Settings dialog
+(which you can access by right clicking on the app folder), or by manually configuring the
+signingConfigs block. Make sure the keystore is included in your project directory and is referenced
 
-http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Signing-Configurations
+via http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Signing-Configurations
 
-3. Configure the release build type to use your new signing configuration. Again, you can either use the Module Settings dialog, or do it manually.
+3. Configure the release build type to use your new signing configuration. Again, you can either
+use the Module Settings dialog, or do it manually.
 
 4. Finally, deploy the release build type to your test device!
 
@@ -20,9 +24,16 @@ The solution to this exercise is essentially Demo 4.05
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'ultimaKey'
+            keyPassword 'fantasy7'
+            storeFile file('C:/Users/ioutd/Documents/GitHub/ud867/4.06-Exercise-ConfigureSigning/keystore.jks')
+            storePassword 'fantasy7'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
-
     defaultConfig {
         applicationId "com.udacity.gradle.automaticsigning"
         minSdkVersion 15
@@ -34,11 +45,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.1.1'
 }
