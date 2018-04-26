@@ -22,13 +22,15 @@ use a connected test that runs on a live Android device or emulator.
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 27
+    buildToolsVersion '26.0.2'
+
+    flavorDimensions 'free', 'paid'
 
     defaultConfig {
         applicationId "com.udacity.gradle.testing"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,9 +39,11 @@ android {
     productFlavors {
         free {
             applicationId "com.udacity.gradle.testing.free"
+            dimension "free"
         }
         paid {
             applicationId "com.udacity.gradle.testing.paid"
+            dimension "paid"
         }
     }
 
@@ -56,6 +60,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:27.1.1'
     testCompile 'junit:junit:4.12'
 }
